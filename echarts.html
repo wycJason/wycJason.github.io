@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>艾宾浩斯遗忘曲线</title>
+		<style type="text/css">
+			html,
+			body {
+				padding: 0;
+				margin: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			.table {
+				border-collapse: collapse;
+				text-align: center;
+			}
+
+			.percent {
+				color: red;
+			}
+
+			.caption {
+				margin-bottom: 25px;
+				font-size: 18px;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="main" style="width: 100%;height:60%;"></div>
+		<table width="80%" align="center" border="1" class="table">
+			<caption class="caption">艾宾浩斯遗忘曲线</caption>
+			<thead>
+				<tr>
+					<th>名称</th>
+					<th>第0次</th>
+					<th>第1次</th>
+					<th>第2次</th>
+					<th>第3次</th>
+					<th>第4次</th>
+					<th>第5次</th>
+					<th>第6次</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>新记忆</td>
+					<td class="percent">100%</td>
+					<td>42%</td>
+					<td>23%</td>
+					<td>18%</td>
+					<td>15%</td>
+					<td>5%</td>
+					<td>2%</td>
+				</tr>
+				<tr>
+					<td>第1次复习</td>
+					<td></td>
+					<td class="percent">100%</td>
+					<td>78%</td>
+					<td>60%</td>
+					<td>42%</td>
+					<td>25%</td>
+					<td>20%</td>
+				</tr>
+				<tr>
+					<td>第2次复习</td>
+					<td></td>
+					<td></td>
+					<td class="percent">100%</td>
+					<td>82%</td>
+					<td>65%</td>
+					<td>60%</td>
+					<td>58%</td>
+				</tr>
+				<tr>
+					<td>第3次复习</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class="percent">100%</td>
+					<td>99%</td>
+					<td>98%</td>
+					<td>97%</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<script src="./echarts.min.js"></script>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main'));
+			var option = {
+				title: {
+					text: "艾宾浩斯遗忘曲线",
+					left: "center",
+				},
+				legend: {
+					orient: 'vertical',
+					right: 10,
+					top: 'center'
+				},
+				dataset: {
+					// 提供一份数据。
+					source: [
+						['名称', '第0次复习', '第1次复习', '第2次复习', '第3次复习'],
+						['第0次', 100, null, null, null],
+						['第1次', 42, 100, null, null],
+						['第2次', 23, 78, 100, null],
+						['第3次', 18, 60, 82, 100],
+						['第4次', 15, 42, 65, 99],
+						['第5次', 5, 25, 60, 98],
+						['第6次', 2, 20, 58, 97]
+					]
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'cross'
+					},
+					//formatter: '{b}:{c}'
+					valueFormatter: (value) => `记忆量：${value}%`
+				},
+				// 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+				xAxis: {
+					name: '复习次数',
+					nameLocation: 'middle',
+					nameTextStyle: {
+						padding: [15, 0],
+						fontSize: 15,
+						color: 'black'
+					},
+					type: 'category',
+					axisTick: {
+						alignWithLabel: false
+					},
+					axisLine: {
+						show: true,
+						symbol: ['none', 'arrow'],
+						symbolOffset: [0, 18],
+						lineStyle: {
+							type: 'solid'
+						}
+					}
+				},
+				// 声明一个 Y 轴，数值轴。
+				yAxis: {
+					name: '记忆量',
+					nameLocation: 'center',
+					nameTextStyle: {
+						padding: [35, 0],
+						fontSize: 15,
+						color: 'black'
+					},
+					type: 'value',
+					axisLabel: {
+						formatter: '{value} %',
+						align: 'right'
+					},
+					axisLine: {
+						show: true,
+						symbol: ['none', 'arrow'],
+						symbolOffset: [0, 18],
+						lineStyle: {
+							type: 'solid'
+						}
+					}
+				},
+				series: [{
+						type: 'line',
+						smooth: true,
+						label: {
+							show: true,
+							position: 'top',
+							formatter: '记忆量:{@[1]}%'
+						}
+					},
+					{
+						type: 'line',
+						smooth: true,
+						label: {
+							show: true,
+							position: 'top',
+							formatter: '记忆量:{@[2]}%'
+						}
+					},
+					{
+						type: 'line',
+						smooth: true,
+						label: {
+							show: true,
+							position: 'top',
+							formatter: '记忆量:{@[3]}%'
+						}
+					},
+					{
+						type: 'line',
+						smooth: true,
+						label: {
+							show: true,
+							position: 'top',
+							formatter: '记忆量:{@[4]}%'
+						}
+					}
+				]
+			};
+
+
+			myChart.setOption(option);
+		</script>
+	</body>
+</html>
